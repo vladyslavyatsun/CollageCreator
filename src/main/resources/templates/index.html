@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+</head>
+
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="index">
+                Collage Creator
+            </a>
+        </div>
+    </div>
+</nav>
+<div style="background-color: aquamarine"></div>
+<h3 class="col-md-offset-2" th:text="${rateLimit}"></h3>
+<form class="form-horizontal" id="myForm" th:action="makeCollage">
+    <div class="form-group">
+        <label for="inputLogin" class="col-sm-2 control-label">login</label>
+        <div class="col-sm-2">
+            <input name="login" type="text" class="form-control" id="inputLogin" placeholder="login"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputWidth" class="col-sm-2 control-label">width</label>
+        <div class="col-sm-2">
+            <input name="width"  min="100" max="10000" type="number" class="form-control" id="inputWidth" placeholder="width"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputHeight" class="col-sm-2 control-label">height</label>
+        <div class="col-sm-2">
+            <input name="height" min="100" max="10000" type="number" class="form-control" id="inputHeight" placeholder="height"/>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="selectProp" class="col-sm-2 control-label">Select style</label>
+        <select name="selectProp" id="selectProp" class="col-sm-2 control-label" >
+            <option value="0">block</option>
+            <option value="1">advanced</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Make collage</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

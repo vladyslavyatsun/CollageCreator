@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="index">
+                Collage Creator
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <a id="userHref" href="">
+        <img id="userImg" src="" alt="image not found" height="100" class="img-circle"/>
+    </a>
+    <h3 id="userInfo"></h3>
+    <!--<button  class="btn btn-default" type="submit" id="but-save" href="">load</button>-->
+    <h4>Press right mouse button on image, to save it.</h4>
+</div>
+
+<canvas id="collage" th:width="${collageW}" th:height="${collageH}"></canvas>
+
+</body>
+
+
+
+<script th:inline="javascript">
+    userInfo(/*[[${user}]]*/);
+    function userInfo(user) {
+        document.getElementById("userHref").href = "https://twitter.com/" + user.screenName;
+        document.getElementById("userImg").src = user.originalProfileImageURLHttps;
+//        document.getElementById("userInfo") = user.name;
+    }
+</script>
+
+<script th:inline="javascript">
+
+    checkImage(/*[[${images}]]*/);
+
+    function checkImage(images) {
+        var canvas = document.getElementById("collage");
+        canvas.width = /*[[${collageW}]]*/;
+        canvas.height = /*[[${collageH}]]*/;
+
+        var context = canvas.getContext("2d");
+        images.forEach(function (item) {
+            var img = new Image();
+            img.src = item.imgUrl;
+            img.setAttribute('crossOrigin', 'anonymous');
+            img.onload = function () {
+//                console.log(item.x, item.y);
+                context.drawImage(img, item.x, item.y, item.width + 1, item.height + 1);
+            };
+
+            img.onerror = function(){
+                img.src =  "default.png";
+                img.setAttribute('crossOrigin', 'anonymous');
+                context.drawImage(img, item.x, item.y, item.width + 1, item.height + 1);
+            }
+        });
+
+    }
+</script>
+
+<script th:inline="javascript">
+    var button = document.getElementById('but-save');
+    button.addEventListener('click', function (e) {
+        button.href = document.getElementById("collage").toDataURL('image/png');
+        button.download = "collage.png";
+    });
+</script>
+
+</html>
